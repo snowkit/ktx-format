@@ -77,6 +77,8 @@ class KTX {
             dimensions: 1
         };
 
+        fin.position += ktx.bytesOfKeyValueData;
+        /* TODO: parse and type the key-value-data
         for (i in fin.position...(fin.position+ktx.bytesOfKeyValueData)) {
             var kvByteSize = fin.readInt32();
             var kv = Bytes.alloc(kvByteSize);
@@ -84,9 +86,8 @@ class KTX {
             var padSize = 3 - ((kvByteSize + 3) % 4);
             var pad = Bytes.alloc(padSize);
             fin.readFullBytes(pad, 0, padSize);
-
-            // TODO: parse and type the key-value-data
         }
+        */
 
         // run some validation
         if (ktx.glTypeSize != 1 && ktx.glTypeSize != 2 && ktx.glTypeSize != 4)

@@ -45,9 +45,12 @@ class KTX {
     public static function load(_bytes:Bytes):KTXData {
         var fin:BytesInput = new BytesInput(_bytes);
 
-        var id = fin.readString(12);        
-        if (id != "\xABKTX 11\xBB\r\n\x1A\n") // check file identifier
+        var id = UInt8Array.fromBytes(_bytes, 0, 12);
+        if (id[0] != 0xAB && id[1] != 0x4B && id[2] != 0x54 && id[3] != 0x58 &&
+            id[4] != 0x20 && id[5] != 0x31 && id[6] != 0x31 && id[7] != 0xBB &&
+            id[8] != 0x0D && id[9] != 0x0A && id[10] != 0x1A && id[11] != 0x0A)
             return null;
+        fin.position = 12;
 
         // check endianess of data
         var e = fin.readInt32();
@@ -137,6 +140,16 @@ class KTX {
                 height: Std.int(Math.max(1, ktx.pixelHeight >> i)),
                 depth: Std.int(Math.max(1, ktx.pixelDepth >> i))
             }
+            
+            /* HACK-NOTE:
+            Uncomment the following part if have trouble loading the last mips
+            of a cubemap!
+            if (ktx.numberOfFaces == 6 && i > 1 && ml.width == 1) {
+                var w = ktx.mips[i-1].width;
+                ml.imageSize = Std.int(ktx.mips[i-1].imageSize / (w*w));
+            }
+            */
+
             var imageSizeRounded = (ml.imageSize + 3)&~3;
 
             for (k in 0...ktx.numberOfFaces) {

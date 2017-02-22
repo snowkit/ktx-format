@@ -2,6 +2,14 @@
 
 An unencumbered Haxe library to parse the [KTX texture file format from Khronos](https://www.khronos.org/opengles/sdk/tools/KTX/file_format_spec/).
 
+## Usage
+
+```haxe
+var bytes: haxe.io.Bytes = ...
+var data = KTX.load(bytes);
+//  data.glType ...
+```
+
 ## Using KTX-Textures
 This library is pretty straightforward and supplies you with all the necessary information to forward the texturedata directly to opengl. There is little to no data processing necessary during load time which makes this a great addition/alternative to other common texture formats.
 

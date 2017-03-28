@@ -3,6 +3,7 @@ package ktx;
 import haxe.io.Bytes;
 import haxe.io.BytesData;
 import haxe.io.BytesInput;
+import haxe.io.UInt8Array;
 import haxe.io.UInt16Array;
 import haxe.io.UInt32Array;
 
